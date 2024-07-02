@@ -1,11 +1,12 @@
 [package]
-name = "nrs-language-server"
+name = "chiquito-language-server"
 version = "0.1.0"
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+chiquito = { git = "https://github.com/privacy-scaling-explorations/chiquito", rev = "3d35bd5"}
 chumsky = "0.8.0"
 env_logger = "0.9.0"
 ropey = "1.5.0"
@@ -16,5 +17,8 @@ serde = { version = "1.0", features = ["derive"] }
 dashmap = "5.1.0"
 log = "0.4.14"
 im-rc = "15.0.0"
+lalrpop-util = "0.20.2"
+codespan-reporting = "0.11.1"
+num-bigint = "0.4.5"
 
 

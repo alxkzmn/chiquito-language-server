@@ -1,0 +1,41 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"name": "Chiquito",
+    "fileTypes": [
+        "chiquito"
+    ],
+	"patterns": [
+		{
+            "name": "comment.line.double-slash.chiquito",
+            "match": "//.*$"
+        },
+        {
+            "name": "keyword.control.chiquito",
+            "match": "\\b(machine|state|if|else)\\b"
+        },
+        {
+            "name": "entity.name.type.chiquito",
+            "match": "\\b(field|signal)\\b"
+        },
+        {
+            "name": "variable.parameter.chiquito",
+            "match": "\\b(signal)\\s+([a-zA-Z_][a-zA-Z0-9_]*)"
+        },
+        {
+            "name": "constant.numeric.chiquito",
+            "match": "\\b\\d+\\b"
+        },
+        {
+            "name": "keyword.operator.chiquito",
+            "match": "(<==|==|\\->|\\+|\\-|\\*|\\/)"
+        },
+        {
+            "name": "markup.chiquito",
+            "match": ";"
+        }
+	],
+	"repository": {
+		
+	},
+	"scopeName": "source.chiquito"
+}

@@ -3,7 +3,7 @@ use std::collections::HashMap;
 use crate::chumsky::{Expr, Func, Spanned};
 pub enum ImCompleteCompletionItem {
     Variable(String),
-    Function(String, Vec<String>),
+    State(String, Vec<String>),
 }
 /// return (need_to_continue_search, founded reference)
 pub fn completion(
@@ -15,7 +15,7 @@ pub fn completion(
         if v.name.1.end < ident_offset {
             map.insert(
                 v.name.0.clone(),
-                ImCompleteCompletionItem::Function(
+                ImCompleteCompletionItem::State(
                     v.name.0.clone(),
                     v.args.clone().into_iter().map(|(name, _)| name).collect(),
                 ),
@@ -50,9 +50,7 @@ pub fn get_completion_of(
         // Expr::List(exprs) => exprs
         //     .iter()
         //     .for_each(|expr| get_definition(expr, definition_ass_list)),
-        Expr::Local(local) => {
-            !(ident_offset >= local.1.start && ident_offset < local.1.end)
-        }
+        Expr::Local(local) => !(ident_offset >= local.1.start && ident_offset < local.1.end),
         Expr::Let(name, lhs, rest, _name_span) => {
             definition_map.insert(
                 name.clone(),

@@ -1,28 +1,28 @@
 use std::collections::HashMap;
 
+use chiquito::{
+    compiler::semantic::SymTable,
+    parser::ast::{tl::TLDecl, Identifier},
+};
 use im_rc::Vector;
+use num_bigint::BigInt;
 
 use crate::chumsky::{Expr, Func, Spanned};
-/// return (need_to_continue_search, founded reference)
-pub fn get_definition(ast: &HashMap<String, Func>, ident_offset: usize) -> Option<Spanned<String>> {
-    let mut vector = Vector::new();
-    for (_, v) in ast.iter() {
-        if v.name.1.start < ident_offset && v.name.1.end > ident_offset {
-            return Some(v.name.clone());
-        }
-        if v.name.1.end < ident_offset {
-            vector.push_back(v.name.clone());
-        }
+/// return (need_to_continue_search, found reference)
+pub fn get_definition(
+    sym_table: &SymTable,
+    file_path: &str,
+    ident_offset: usize,
+) -> Option<Spanned<String>> {
+    let found = sym_table.find_symbol_by_offset(file_path.to_string(), ident_offset);
+
+    if let Some(found) = found {
+        return Some((
+            found.id,
+            found.definition_ref.start..found.definition_ref.end,
+        ));
     }
 
-    for (_, v) in ast.iter() {
-        let args = v.args.iter().cloned().collect::<Vector<_>>();
-        if let (_, Some(value)) =
-            get_definition_of_expr(&v.body, args + vector.clone(), ident_offset)
-        {
-            return Some(value);
-        }
-    }
     None
 }
 

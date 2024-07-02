@@ -1,5 +1,5 @@
 {
-  "name": "nrs-language-server",
+  "name": "chiquito-language-server",
   "description": "nano rust language server",
   "license": "MIT",
   "version": "1.5.0",
@@ -16,23 +16,26 @@
   },
   "enabledApiProposals": [],
   "activationEvents": [
-    "onLanguage:nrs"
+    "onLanguage:chiquito"
   ],
   "main": "./dist/extension.js",
   "contributes": {
-    "languages": [
-      {
-        "id": "nrs",
-        "extensions": [
-          ".nrs"
-        ]
-      }
-    ],
+    "languages": [{
+      "id": "chiquito",
+      "aliases": ["Chiquito", "chiquito"],
+      "extensions": [".chiquito"],
+      "configuration": "./language-configuration.json"
+    }],
+    "grammars": [{
+      "language": "chiquito",
+      "scopeName": "source.chiquito",
+      "path": "./syntaxes/chiquito.tmLanguage.json"
+    }],
     "configuration": {
       "type": "object",
-      "title": "nrs-language-server",
+      "title": "chiquito-language-server",
       "properties": {
-        "nrs-language-server.trace.server": {
+        "chiquito-language-server.trace.server": {
           "type": "string",
           "scope": "window",
           "enum": [
@@ -52,7 +55,7 @@
     }
   },
   "scripts": {
-    "postinstall": "cd client && pnpm i",
+    "postinstall": "cd client && npm i",
     "vscode:prepublish": "npm run esbuild-base -- --minify",
     "test-compile": "tsc -p ./",
     "compile": "cross-env NODE_ENV=production tsc -b",
